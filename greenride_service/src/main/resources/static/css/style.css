@@ -10,14 +10,10 @@
 body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     
-    /* Αλλαγή φόντου σε λευκό */
+    /* Καθαρό λευκό φόντο για όλες τις σελίδες */
     background-color: white;
     
-    /* Ρυθμίσεις εικόνας φόντου */
-    background-image: url('../university-harokopio-test-01-min.jpg');
-    background-repeat: no-repeat;       /* Εμφάνιση μόνο μία φορά */
-    background-position: top center;    /* Τοποθέτηση ψηλά και στο κέντρο */
-    background-size: 100% auto;         /* Πλάτος 100%, ύψος αυτόματο (διατηρεί αναλογίες) */
+    /* Αφαιρέσαμε όλες τις εντολές για background-image από εδώ */
     
     color: var(--text-color);
     margin: 0;
@@ -26,7 +22,7 @@ body {
 
 /* Make the main content area responsive but contained */
 .container {
-    max-width: 1200px; /* Allows the page to be wide, but not "infinite" on huge screens */
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 15px;
 }
@@ -49,7 +45,7 @@ form {
 
     /* Center the form and limit width */
     max-width: 600px;
-    margin: 2rem auto; /* Centers the form horizontally */
+    margin: 2rem auto;
     width: 100%;
 }
 
@@ -64,8 +60,8 @@ input[type="text"],
 input[type="password"],
 input[type="email"],
 input[type="tel"],
-input[type="datetime-local"], /* Added for Ride Date */
-input[type="number"],        /* Added for Seats */
+input[type="datetime-local"],
+input[type="number"],
 textarea,
 select {
     width: 100%;
@@ -73,7 +69,7 @@ select {
     margin-top: 0.4rem;
     border: 1px solid #ddd;
     border-radius: 6px;
-    box-sizing: border-box; /* Fixes padding issues */
+    box-sizing: border-box;
     background-color: #fafafa;
 }
 
@@ -111,7 +107,7 @@ table {
     margin-top: 1rem;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     border-radius: 8px;
-    overflow: hidden; /* Rounds the corners of the table */
+    overflow: hidden;
 }
 
 th {
