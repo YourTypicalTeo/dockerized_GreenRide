@@ -1,0 +1,45 @@
+services:
+  hua-noc:
+    build: ./HUA-NOC
+    container_name: hua-noc
+    ports:
+      - "8081:8081"
+    networks:
+      - greenride-net
+
+  # ADDED: PostgreSQL Database Container
+  db:
+    image: postgres:15-alpine
+    container_name: greenride-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=greenride_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - greenride-net
+
+  greenride:
+    build: ./greenride_service
+    container_name: greenride
+    ports:
+      - "8080:8080"
+    depends_on:
+      - hua-noc
+      - db  # Wait for DB to start
+    environment:
+      - NOC_SERVICE_URL=http://hua-noc:8081/api/v1
+      # Connects to the 'db' service defined above
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/greenride_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+    networks:
+      - greenride-net
+
+volumes:
+  postgres_data:
+
+networks:
+  greenride-net:
+    driver: bridge

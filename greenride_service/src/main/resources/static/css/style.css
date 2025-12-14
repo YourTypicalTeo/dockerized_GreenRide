@@ -1,0 +1,150 @@
+/* GreenRide Clean Theme */
+:root {
+    --primary-color: #198754; /* GreenRide Green */
+    --primary-hover: #146c43;
+    --bg-color: #f4f7f6;
+    --text-color: #333;
+    --card-bg: #ffffff;
+}
+
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    
+    /* Αλλαγή φόντου σε λευκό */
+    background-color: white;
+    
+    /* Ρυθμίσεις εικόνας φόντου */
+    background-image: url('../university-harokopio-test-01-min.jpg');
+    background-repeat: no-repeat;       /* Εμφάνιση μόνο μία φορά */
+    background-position: top center;    /* Τοποθέτηση ψηλά και στο κέντρο */
+    background-size: 100% auto;         /* Πλάτος 100%, ύψος αυτόματο (διατηρεί αναλογίες) */
+    
+    color: var(--text-color);
+    margin: 0;
+    padding-bottom: 3rem;
+}
+
+/* Make the main content area responsive but contained */
+.container {
+    max-width: 1200px; /* Allows the page to be wide, but not "infinite" on huge screens */
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Headings */
+h2 {
+    text-align: center;
+    color: var(--primary-color);
+    font-weight: 600;
+    margin: 2rem 0;
+}
+
+/* --- FORM STYLES (Login, Register, Create Ride) --- */
+form {
+    background-color: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border: 2px solid #eaeaea;
+
+    /* Center the form and limit width */
+    max-width: 600px;
+    margin: 2rem auto; /* Centers the form horizontally */
+    width: 100%;
+}
+
+label {
+    display: block;
+    margin-top: 1rem;
+    font-weight: 500;
+    color: #555;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+input[type="datetime-local"], /* Added for Ride Date */
+input[type="number"],        /* Added for Seats */
+textarea,
+select {
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 0.4rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box; /* Fixes padding issues */
+    background-color: #fafafa;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.15);
+}
+
+/* Buttons */
+button, input[type="submit"], .btn-primary {
+    width: 100%;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover, input[type="submit"]:hover, .btn-primary:hover {
+    background-color: var(--primary-hover);
+}
+
+/* --- TABLE STYLES (For Rides List) --- */
+table {
+    width: 100%;
+    background-color: white;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden; /* Rounds the corners of the table */
+}
+
+th {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem;
+    text-align: left;
+}
+
+td {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Links */
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/* Error Messages */
+.error {
+    color: #d32f2f;
+    background-color: #fdecea;
+    padding: 0.75rem;
+    margin-top: 1rem;
+    text-align: center;
+    border-radius: 4px;
+}
