@@ -1,146 +1,131 @@
 /* GreenRide Clean Theme */
 :root {
-    --primary-color: #198754; /* GreenRide Green */
+    --primary-color: #198754;
     --primary-hover: #146c43;
-    --bg-color: #f4f7f6;
+    --bg-color: #f8f9fa; /* Softer gray background */
     --text-color: #333;
     --card-bg: #ffffff;
 }
 
 body {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    
-    /* Καθαρό λευκό φόντο για όλες τις σελίδες */
-    background-color: white;
-    
-    /* Αφαιρέσαμε όλες τις εντολές για background-image από εδώ */
-    
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
     color: var(--text-color);
     margin: 0;
     padding-bottom: 3rem;
+    min-height: 100vh;
 }
 
-/* Make the main content area responsive but contained */
+/* --- Layout --- */
 .container {
-    max-width: 1200px;
+    max-width: 1140px;
     margin: 0 auto;
-    padding: 0 15px;
 }
 
-/* Headings */
-h2 {
-    text-align: center;
+h2, h3, h4 {
     color: var(--primary-color);
-    font-weight: 600;
-    margin: 2rem 0;
+    font-weight: 700;
+    margin-bottom: 1rem;
 }
 
-/* --- FORM STYLES (Login, Register, Create Ride) --- */
-form {
+/* --- AUTH CARDS (Login, Register, Create) --- */
+/* Add class="auth-card" to your login/register forms */
+.auth-card {
     background-color: var(--card-bg);
     padding: 2.5rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    border: 2px solid #eaeaea;
-
-    /* Center the form and limit width */
-    max-width: 600px;
-    margin: 2rem auto;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0,0,0,0.05);
+    max-width: 500px;
+    margin: 3rem auto;
     width: 100%;
 }
 
-label {
-    display: block;
-    margin-top: 1rem;
-    font-weight: 500;
-    color: #555;
+.auth-card h2 {
+    text-align: center;
+    margin-bottom: 2rem;
 }
 
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="tel"],
-input[type="datetime-local"],
-input[type="number"],
-textarea,
-select {
-    width: 100%;
-    padding: 0.75rem;
-    margin-top: 0.4rem;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    box-sizing: border-box;
-    background-color: #fafafa;
+/* --- SEARCH BAR --- */
+.search-container {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    margin-bottom: 2rem;
+    border: 1px solid #eee;
 }
 
-input:focus, select:focus, textarea:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    background-color: #fff;
-    box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.15);
-}
-
-/* Buttons */
-button, input[type="submit"], .btn-primary {
-    width: 100%;
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 0.8rem;
-    font-size: 1rem;
-    font-weight: 600;
-    margin-top: 1.5rem;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-button:hover, input[type="submit"]:hover, .btn-primary:hover {
-    background-color: var(--primary-hover);
-}
-
-/* --- TABLE STYLES (For Rides List) --- */
-table {
-    width: 100%;
-    background-color: white;
-    border-collapse: collapse;
-    margin-top: 1rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+/* --- INPUTS & BUTTONS --- */
+/* Overriding Bootstrap defaults for a polished look */
+.form-control {
+    padding: 0.75rem 1rem;
     border-radius: 8px;
+    border: 1px solid #dee2e6;
+    background-color: #fff;
+    box-shadow: none;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(25, 135, 84, 0.1);
+}
+
+.btn {
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+/* --- RIDE CARDS --- */
+.ride-card {
+    border: none;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    transition: transform 0.2s, box-shadow 0.2s;
+    height: 100%;
     overflow: hidden;
 }
 
-th {
-    background-color: var(--primary-color);
-    color: white;
+.ride-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+}
+
+.ride-card .card-header {
+    background-color: rgba(25, 135, 84, 0.05);
+    border-bottom: 1px solid rgba(25, 135, 84, 0.1);
     padding: 1rem;
-    text-align: left;
+    font-weight: 600;
 }
 
-td {
-    padding: 1rem;
-    border-bottom: 1px solid #eee;
+.ride-card .card-body {
+    padding: 1.5rem;
 }
 
-tr:hover {
-    background-color: #f1f1f1;
+.ride-card .card-footer {
+    background: transparent;
+    border-top: none;
+    padding: 1rem 1.5rem 1.5rem;
 }
 
-/* Links */
-a {
-    color: var(--primary-color);
-    text-decoration: none;
-}
-a:hover {
-    text-decoration: underline;
-}
-
-/* Error Messages */
-.error {
-    color: #d32f2f;
-    background-color: #fdecea;
-    padding: 0.75rem;
-    margin-top: 1rem;
-    text-align: center;
-    border-radius: 4px;
+/* --- ALERTS --- */
+.alert {
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }

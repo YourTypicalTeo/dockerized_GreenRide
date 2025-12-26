@@ -8,6 +8,16 @@
 <body>
 
 <div layout:fragment="main">
+
+    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${successMessage}">Success!</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${errorMessage}">Error!</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
     <h2 class="mb-4 text-success">My Bookings</h2>
 
     <div class="table-responsive">
@@ -35,11 +45,14 @@
                               th:text="${booking.status}">Status</span>
                 </td>
                 <td>
-                    <button th:if="${booking.status} == 'CONFIRMED'"
-                            class="btn btn-sm btn-outline-danger"
-                            th:onclick="'cancelBooking(' + ${booking.id} + ')'">
-                        Cancel
-                    </button>
+                    <form th:if="${booking.status} == 'CONFIRMED'"
+                          th:action="@{/bookings/{id}/cancel(id=${booking.id})}" method="post" style="display:inline;">
+                        <button type="submit"
+                                class="btn btn-sm btn-outline-danger"
+                                onclick="return confirm('Are you sure you want to cancel this booking?');">
+                            Cancel
+                        </button>
+                    </form>
                 </td>
             </tr>
             <tr th:if="${#lists.isEmpty(bookings)}">
@@ -51,24 +64,6 @@
         </table>
     </div>
 
-    <script>
-        function cancelBooking(bookingId) {
-            if(!confirm("Are you sure you want to cancel this booking?")) return;
-
-            fetch(`/api/v1/rides/bookings/${bookingId}`, {
-                method: 'DELETE'
-            })
-                .then(async response => {
-                    if (response.ok) {
-                        alert("Booking Cancelled.");
-                        window.location.reload();
-                    } else {
-                        const text = await response.text();
-                        alert("Error: " + text);
-                    }
-                });
-        }
-    </script>
 </div>
 
 </body>

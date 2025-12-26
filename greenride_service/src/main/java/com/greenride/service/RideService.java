@@ -9,4 +9,9 @@ public interface RideService {
     List<Ride> searchRides(String start, String destination);
     Ride getRideById(Long rideId);
     List<Ride> getRidesByDriver(String driverUsername);
+
+    // --- Admin Methods ---
+    List<Ride> findAllRides();
+    long countRides();
+    void adminDeleteRide(Long id);
 }

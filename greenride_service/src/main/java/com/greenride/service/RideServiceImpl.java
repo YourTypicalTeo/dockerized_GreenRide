@@ -69,4 +69,26 @@ public class RideServiceImpl implements RideService {
     public List<Ride> getRidesByDriver(String driverUsername) {
         return rideRepository.findByDriver_Username(driverUsername);
     }
+
+    // --- Admin Implementations ---
+
+    @Override
+    public List<Ride> findAllRides() {
+        return rideRepository.findAll();
+    }
+
+    @Override
+    public long countRides() {
+        return rideRepository.count();
+    }
+
+    @Override
+    @Transactional
+    public void adminDeleteRide(Long id) {
+        if (!rideRepository.existsById(id)) {
+            // Reusing your custom exception for consistency
+            throw new ResourceNotFoundException("Ride not found with ID: " + id);
+        }
+        rideRepository.deleteById(id);
+    }
 }

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{base}">
+<head><title>Admin Dashboard</title></head>
+<body>
+<div layout:fragment="main">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold text-danger">Admin Console</h2>
+  </div>
+
+  <div class="row g-4 mb-5">
+    <div class="col-md-4">
+      <div class="card p-4 bg-light border-0 h-100">
+        <h5 class="text-muted">Total Users</h5>
+        <h1 class="display-4 fw-bold mb-0" th:text="${totalUsers}">0</h1>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-4 bg-light border-0 h-100">
+        <h5 class="text-muted">Active Rides</h5>
+        <h1 class="display-4 fw-bold mb-0" th:text="${totalRides}">0</h1>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-4 text-white bg-success border-0 h-100" style="background: linear-gradient(45deg, #198754, #20c997);">
+        <h5 class="opacity-75">Avg. Occupancy</h5>
+        <h1 class="display-4 fw-bold mb-0" th:text="${occupancy}">0%</h1>
+        <small class="opacity-75">Vehicle efficiency</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mb-5">
+    <div class="card-header bg-white">
+      <h5 class="m-0 fw-bold">User Management</h5>
+    </div>
+    <div class="card-body p-0 table-responsive">
+      <table class="table table-hover m-0 align-middle">
+        <thead class="bg-light">
+        <tr>
+          <th class="ps-4">ID</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th class="text-end pe-4">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+          <td class="ps-4" th:text="${user.id}">1</td>
+          <td th:text="${user.username}">User</td>
+          <td th:text="${user.email}">email@test.com</td>
+          <td>
+                            <span th:each="role : ${user.roles}"
+                                  class="badge me-1"
+                                  th:classappend="${role.name == 'ROLE_ADMIN'} ? 'bg-danger' : 'bg-secondary'"
+                                  th:text="${role.name}">ROLE</span>
+          </td>
+          <td class="text-end pe-4">
+            <form th:if="${user.username != #authentication.name}"
+                  th:action="@{/admin/users/{id}/delete(id=${user.id})}" method="post">
+              <button class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this user?');">Delete</button>
+            </form>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header bg-white">
+      <h5 class="m-0 fw-bold">Ride Management</h5>
+    </div>
+    <div class="card-body p-0 table-responsive">
+      <table class="table table-hover m-0 align-middle">
+        <thead class="bg-light">
+        <tr>
+          <th class="ps-4">ID</th>
+          <th>Driver</th>
+          <th>Route</th>
+          <th>Date</th>
+          <th class="text-end pe-4">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ride : ${rides}">
+          <td class="ps-4" th:text="${ride.id}">1</td>
+          <td th:text="${ride.driver.username}">Driver</td>
+          <td>
+            <span th:text="${ride.startLocation}">A</span> ➝ <span th:text="${ride.destination}">B</span>
+          </td>
+          <td th:text="${#temporals.format(ride.departureTime, 'dd MMM HH:mm')}">Date</td>
+          <td class="text-end pe-4">
+            <form th:action="@{/admin/rides/{id}/delete(id=${ride.id})}" method="post">
+              <button class="btn btn-sm btn-outline-danger" onclick="return confirm('Force delete this ride?');">Remove</button>
+            </form>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

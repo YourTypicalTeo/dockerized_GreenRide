@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -76,5 +77,27 @@ public class UserServiceImpl implements UserService {
         smsNotificationPort.sendSms(savedUser.getPhoneNumber(), "Welcome to GreenRide! Your account is now active.");
 
         return savedUser;
+    }
+
+    // --- Admin Implementations ---
+
+    @Override
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public long countUsers() {
+        return userRepository.count();
+    }
+
+    @Override
+    @Transactional
+    public void deleteUser(Long id) {
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id: " + id);
+        }
     }
 }

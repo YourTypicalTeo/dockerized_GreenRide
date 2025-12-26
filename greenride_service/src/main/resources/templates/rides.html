@@ -9,84 +9,82 @@
 
 <div layout:fragment="main">
 
-    <div class="row mb-4 align-items-end">
-        <div class="col-md-8">
-            <h2 class="mb-3">Find a Ride</h2>
-            <form th:action="@{/rides}" method="get" class="d-flex gap-2">
-                <input type="text" name="start" class="form-control" placeholder="From (e.g. Athens)" th:value="${paramStart}">
-                <input type="text" name="dest" class="form-control" placeholder="To (e.g. University)" th:value="${paramDest}">
-                <button type="submit" class="btn btn-primary">Search</button>
-                <a th:href="@{/rides}" class="btn btn-outline-secondary">Clear</a>
-            </form>
-        </div>
-        <div class="col-md-4 text-end">
-            <a th:href="@{/rides/create}" class="btn btn-success">+ Offer a Ride</a>
-        </div>
+    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${successMessage}">Success!</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${errorMessage}">Error!</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
-    <div th:if="${param.success}" class="alert alert-success">
-        Ride published successfully!
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="m-0">Find a Ride</h2>
+        <a th:href="@{/rides/create}" class="btn btn-success shadow-sm">+ Offer a Ride</a>
     </div>
 
-    <div class="row row-cols-1 row-cols-md-2 g-4">
+    <div class="search-container">
+        <form th:action="@{/rides}" method="get" class="row g-3 align-items-center">
+            <div class="col-md-5">
+                <input type="text" name="start" class="form-control form-control-lg"
+                       placeholder="From (e.g. Athens)" th:value="${paramStart}">
+            </div>
+            <div class="col-md-5">
+                <input type="text" name="dest" class="form-control form-control-lg"
+                       placeholder="To (e.g. University)" th:value="${paramDest}">
+            </div>
+            <div class="col-md-2 d-flex gap-2">
+                <button type="submit" class="btn btn-primary btn-lg w-100">Search</button>
+                <a th:href="@{/rides}" class="btn btn-outline-secondary btn-lg" title="Clear">×</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         <div class="col" th:each="ride : ${rides}">
-            <div class="card h-100 border-success mb-3" style="border-width: 2px;">
-                <div class="card-header bg-transparent border-success d-flex justify-content-between">
+            <div class="card ride-card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
                     <span class="badge bg-success" th:text="${#temporals.format(ride.departureTime, 'dd MMM HH:mm')}">Date</span>
-                    <small class="text-muted">Driver: <span th:text="${ride.driver.username}">User</span></small>
+                    <small class="text-muted">Driver: <strong th:text="${ride.driver.username}">User</strong></small>
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title text-center">
+                <div class="card-body text-center">
+                    <h5 class="card-title mb-3">
                         <span th:text="${ride.startLocation}">Start</span>
-                        <span> ➝ </span>
+                        <span class="mx-2 text-muted">➝</span>
                         <span th:text="${ride.destination}">Dest</span>
                     </h5>
-                    <p class="card-text text-center mt-3">
-                        Seats Available:
-                        <strong class="fs-4" th:text="${ride.availableSeats}">3</strong>
+                    <p class="card-text text-muted">
+                        Available Seats: <strong class="text-dark fs-5" th:text="${ride.availableSeats}">3</strong>
                     </p>
                 </div>
-                <div class="card-footer bg-transparent border-success text-center">
+
+                <div class="card-footer">
                     <div th:if="${currentUser.username != ride.driver.username}">
-                        <form th:action="@{/api/v1/rides/{id}/bookings(id=${ride.id})}" method="post">
-                            <button type="button" class="btn btn-primary w-100"
-                                    th:onclick="'bookRide(' + ${ride.id} + ')'"
+
+                        <form th:action="@{/rides/{id}/book(id=${ride.id})}" method="post">
+                            <button type="submit"
+                                    class="btn btn-primary w-100"
+                                    onclick="return confirm('Confirm booking request?');"
                                     th:disabled="${ride.availableSeats < 1}">
-                                Book Seat
+                                <span th:if="${ride.availableSeats > 0}">Book Seat</span>
+                                <span th:if="${ride.availableSeats < 1}">Full</span>
                             </button>
                         </form>
+
                     </div>
+
                     <div th:if="${currentUser.username == ride.driver.username}">
-                        <span class="badge bg-secondary">Your Ride</span>
+                        <button class="btn btn-secondary w-100" disabled>Your Ride</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-12 text-center" th:if="${#lists.isEmpty(rides)}">
-            <p class="text-muted fs-5">No rides found matching your search.</p>
+        <div class="col-12 text-center py-5" th:if="${#lists.isEmpty(rides)}">
+            <h4 class="text-muted">No rides found.</h4>
+            <p class="text-muted">Try changing your search or offer a ride yourself!</p>
         </div>
     </div>
-
-    <script>
-        function bookRide(rideId) {
-            if(!confirm("Confirm booking?")) return;
-
-            fetch(`/api/v1/rides/${rideId}/bookings`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' }
-            })
-                .then(async response => {
-                    if (response.ok) {
-                        alert("Booking Confirmed!");
-                        window.location.reload();
-                    } else {
-                        const text = await response.text();
-                        alert("Error: " + text); // Shows our backend error message
-                    }
-                });
-        }
-    </script>
 
 </div>
 
