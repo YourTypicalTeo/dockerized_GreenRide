@@ -7,24 +7,24 @@ This project demonstrates a robust **Distributed System** architecture comprisin
 
 ---
 
-## 🏗 System Architecture
+## System Architecture
 
 The system consists of two distinct microservices:
 
-1.  **🚗 GreenRide Service (Core)**
+1.  **GreenRide Service (Core)**
     * **Role:** The main application handling user management, ride booking, and the web interface.
     * **Tech:** Spring Boot Web (MVC), Spring Data JPA, Thymeleaf, Spring Security.
     * **Database:** PostgreSQL (Production/Docker) or H2 (Dev).
     * **Security:** Hybrid architecture—Session-based for Web UI, JWT for REST API.
 
-2.  **📱 HUA-NOC Service (External)**
+2.  **HUA-NOC Service (External)**
     * **Role:** An independent "Network Operations Center" service that handles SMS notifications and phone number validation.
     * **Tech:** Spring Boot Web, Caffeine Cache, Third-party integrations (Routee/Mock).
     * **Communication:** GreenRide talks to HUA-NOC via HTTP/REST.
 
 ---
 
-## 🛠 Tech Stack
+##Tech Stack
 
 * **Language:** Java 21 (Eclipse Temurin)
 * **Framework:** Spring Boot 3.5.7
@@ -36,7 +36,7 @@ The system consists of two distinct microservices:
 
 ---
 
-## 🚀 Quick Start (Docker Compose) - *Recommended*
+## Quick Start (Docker Compose) - *Recommended*
 
 The easiest way to run the full system (App + SMS Service + Database) is using Docker.
 
@@ -68,7 +68,7 @@ The easiest way to run the full system (App + SMS Service + Database) is using D
 
 ---
 
-## 💻 Manual Setup (Local Dev)
+## Manual Setup (Local Dev)
 
 If you wish to run the services individually for development/debugging:
 
