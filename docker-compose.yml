@@ -2,6 +2,7 @@ services:
   hua-noc:
     build: ./HUA-NOC
     container_name: hua-noc
+    restart: always
     ports:
       - "8081:8081"
     networks:
@@ -23,6 +24,7 @@ services:
   greenride:
     build: ./greenride_service
     container_name: greenride
+    restart: always
     ports:
       - "8080:8080"
     depends_on:
