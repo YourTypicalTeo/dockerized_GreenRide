@@ -1,15 +1,10 @@
 # GreenRide: Distributed Carpooling Platform
 
-
-**GreenRide** is a distributed web application designed to help university students share rides, split costs, and reduce their carbon footprint. 
-
 This project demonstrates a robust **Distributed System** architecture comprising two independent microservices communicating via REST APIs, containerized with Docker, and secured with a hybrid stateful/stateless authentication mechanism.
 
 ---
 
 ## System Architecture
-
-The system consists of two distinct microservices:
 
 1.  **GreenRide Service (Core)**
     * **Role:** The main application handling user management, ride booking, and the web interface.
@@ -26,7 +21,7 @@ The system consists of two distinct microservices:
 
 ##Tech Stack
 
-* **Language:** Java 21 (Eclipse Temurin)
+* **Language:** Java 21
 * **Framework:** Spring Boot 3.5.7
 * **Build Tool:** Maven
 * **Containerization:** Docker & Docker Compose
@@ -36,7 +31,7 @@ The system consists of two distinct microservices:
 
 ---
 
-## Quick Start (Docker Compose) - *Recommended*
+## Quick Start (Docker Compose)
 
 The easiest way to run the full system (App + SMS Service + Database) is using Docker.
 
@@ -65,14 +60,3 @@ The easiest way to run the full system (App + SMS Service + Database) is using D
     ```bash
     docker-compose down
     ```
-
----
-
-## Manual Setup (Local Dev)
-
-If you wish to run the services individually for development/debugging:
-
-### 1. Start the NOC Service (Port 8081)
-```bash
-cd HUA-NOC
-./mvnw spring-boot:run
