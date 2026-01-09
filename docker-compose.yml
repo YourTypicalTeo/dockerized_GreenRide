@@ -19,7 +19,7 @@ services:
     environment:
       - NOC_SERVICE_URL=http://hua-noc:8081/api/v1
       # EXTERNAL RENDER DATABASE CONFIGURATION
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://dpg-d5f38vbuibrs7393kep0-a.frankfurt-postgres.render.com:5432/greenride_db_06bi
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://dpg-d5f38vbuibrs7393kep0-a.frankfurt-postgres.render.com:5432/greenride_db_06bi?sslmode=require
       - SPRING_DATASOURCE_USERNAME=greenride_db_06bi_user
       - SPRING_DATASOURCE_PASSWORD=onvudalomvV079cwh0NQ5Z7gJOksCQp4
     networks:
