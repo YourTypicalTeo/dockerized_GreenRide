@@ -21,14 +21,15 @@ public class DataInitializer {
     @Bean
     public CommandLineRunner initData(UserRepository userRepository,
                                       RoleRepository roleRepository,
-                                      RideRepository rideRepository, // <--- MUST BE INJECTED
+                                      RideRepository rideRepository,
+
                                       PasswordEncoder passwordEncoder) {
         return args -> {
-            // --- 1. ROLES ---
             Role userRole = createRoleIfNotFound(roleRepository, "ROLE_USER");
             Role adminRole = createRoleIfNotFound(roleRepository, "ROLE_ADMIN");
 
-            // --- 2. ADMIN ---
+
+            // Creates initial admin user if not present
             if (!userRepository.existsByUsername("admin")) {
                 User admin = new User();
                 admin.setUsername("admin");
@@ -42,53 +43,44 @@ public class DataInitializer {
                 admin.setRoles(roles);
 
                 userRepository.save(admin);
-                System.out.println("✅ ADMIN ACCOUNT CREATED: 'admin' / 'admin123'");
+                System.out.println("ADMIN ACCOUNT CREATED: 'admin' / 'admin123'");
             }
 
-            // --- 3. USERS (Drivers & Passengers) ---
 
-            // Driver 1: Maria
             User driverMaria = createUserIfNotFound(userRepository, roleRepository, passwordEncoder,
                     "maria", "maria@test.com", "pass123", "+306911111111");
 
-            // Driver 2: Nikos
             User driverNikos = createUserIfNotFound(userRepository, roleRepository, passwordEncoder,
                     "nikos", "nikos@test.com", "pass123", "+306922222222");
 
-            // Passenger 1: Giorgos
             User passengerGiorgos = createUserIfNotFound(userRepository, roleRepository, passwordEncoder,
                     "giorgos", "giorgos@test.com", "pass123", "+306933333333");
 
-            // --- 4. RIDES ---
-            // We check if the repository is empty to avoid creating duplicates on every restart
+            // Creates sample rides if none exist
             if (rideRepository.count() == 0) {
-                // Maria: Athens -> Thessaloniki
                 createRide(rideRepository, driverMaria,
                         "Athens, Syntagma",
                         "Thessaloniki, White Tower",
                         LocalDateTime.now().plusDays(2).withHour(10).withMinute(0),
                         3);
 
-                // Maria: Athens -> Chalkida
                 createRide(rideRepository, driverMaria,
                         "Athens, Omonoia",
                         "Chalkida",
                         LocalDateTime.now().plusDays(5).withHour(17).withMinute(30),
                         2);
 
-                // Nikos: Patras -> Athens
+
                 createRide(rideRepository, driverNikos,
                         "Patras, Port",
                         "Athens, Kifissia",
                         LocalDateTime.now().plusDays(1).withHour(8).withMinute(0),
                         4);
 
-                System.out.println("✅ SAMPLE RIDES CREATED for Maria & Nikos");
+                System.out.println("SAMPLE RIDES CREATED for Maria & Nikos");
             }
         };
     }
-
-    // --- HELPER METHODS ---
 
     private Role createRoleIfNotFound(RoleRepository roleRepository, String name) {
         return roleRepository.findByName(name)
@@ -98,6 +90,7 @@ public class DataInitializer {
     private User createUserIfNotFound(UserRepository userRepository, RoleRepository roleRepository,
                                       PasswordEncoder passwordEncoder, String username, String email,
                                       String rawPassword, String phone) {
+        // Creates user with roles if not found
         return userRepository.findByUsername(username).orElseGet(() -> {
             User user = new User();
             user.setUsername(username);
@@ -105,12 +98,11 @@ public class DataInitializer {
             user.setPassword(passwordEncoder.encode(rawPassword));
             user.setPhoneNumber(phone);
 
-            // Assign ROLE_USER
             Role userRole = roleRepository.findByName("ROLE_USER").orElseThrow();
             user.setRoles(Set.of(userRole));
 
             user.setEnabled(true);
-            System.out.println("✅ USER CREATED: " + username);
+            System.out.println("USER CREATED: " + username);
             return userRepository.save(user);
         });
     }
