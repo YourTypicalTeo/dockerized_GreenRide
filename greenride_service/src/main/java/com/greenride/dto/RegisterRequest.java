@@ -15,12 +15,12 @@ public record RegisterRequest(
         String email,
 
         @NotBlank(message = "Password is required")
-        @Size(min = 8, message = "Password must be at least 8 characters long")
+        @Size(min = 8, message = "Password must be at least 8 characters long with a digit, upper, lower and special character")
         @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!.*]).*$",
                 message = "Password must contain a digit, lowercase, uppercase, and a special character")
         String password,
 
-        @NotBlank(message = "Phone number is required")
-        @Pattern(regexp = "^\\+[1-9]\\d{1,14}$", message = "Phone number must start with + and country code (e.g. +3069...)")
+        @Pattern(regexp = "^(\\+3069\\d{8})|(\\+(?!30)\\d{7,14})$",
+                message = "Invalid number. If Greek, must be mobile (+3069...). If International, use E.164 format.")
         String phoneNumber
 ) {}

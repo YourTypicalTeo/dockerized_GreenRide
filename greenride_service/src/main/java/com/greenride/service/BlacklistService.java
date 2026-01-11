@@ -1,4 +1,3 @@
-
 package com.greenride.service;
 
 import org.springframework.stereotype.Service;
@@ -8,8 +7,6 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class BlacklistService {
 
-    // Χρήση Set για γρήγορη αναζήτηση. 
-    // ConcurrentHashMap.newKeySet() για thread-safety.
     private final Set<String> blockedIps = ConcurrentHashMap.newKeySet();
 
     public boolean isBlocked(String ip) {
@@ -22,5 +19,9 @@ public class BlacklistService {
 
     public void unblockIp(String ip) {
         blockedIps.remove(ip);
+    }
+    // Επιστρέφει όλες τις μπλοκαρισμένες IP για να τις δείξουμε στο Admin Panel
+    public Set<String> getBlockedIps() {
+        return blockedIps;
     }
 }

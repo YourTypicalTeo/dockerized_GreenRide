@@ -1,16 +1,14 @@
 package com.greenride.controller.web;
 
 import com.greenride.service.AdminService;
+import com.greenride.service.BlacklistService;
 import com.greenride.service.RideService;
 import com.greenride.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*; // <--- Άλλαξα σε wildcard (*) για να καλύψει το RequestParam
 
 import java.util.Map;
 
@@ -21,13 +19,15 @@ public class AdminController {
 
     private final UserService userService;
     private final RideService rideService;
-    private final AdminService adminService; // Προσθήκη του AdminService
+    private final AdminService adminService;
+    private final BlacklistService blacklistService;
 
     @Autowired
-    public AdminController(UserService userService, RideService rideService, AdminService adminService) {
+    public AdminController(UserService userService, RideService rideService, AdminService adminService, BlacklistService blacklistService) { // <--- Προσθήκη στον Constructor
         this.userService = userService;
         this.rideService = rideService;
         this.adminService = adminService;
+        this.blacklistService = blacklistService;
     }
 
     @GetMapping
@@ -45,6 +45,9 @@ public class AdminController {
         model.addAttribute("users", userService.findAllUsers());
         model.addAttribute("rides", rideService.findAllRides());
 
+        //Περνάμε τη λίστα με τις IP στο HTML
+        model.addAttribute("blockedIps", blacklistService.getBlockedIps());
+
         return "admin";
     }
 
@@ -58,5 +61,19 @@ public class AdminController {
     public String deleteRide(@PathVariable Long id) {
         rideService.adminDeleteRide(id);
         return "redirect:/admin?success=Ride Deleted";
+    }
+
+    @PostMapping("/blacklist/add")
+    public String blockIp(@RequestParam String ip) {
+        if (ip != null && !ip.trim().isEmpty()) {
+            blacklistService.blockIp(ip.trim());
+        }
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/blacklist/remove")
+    public String unblockIp(@RequestParam String ip) {
+        blacklistService.unblockIp(ip);
+        return "redirect:/admin";
     }
 }

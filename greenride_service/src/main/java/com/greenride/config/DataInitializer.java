@@ -29,7 +29,7 @@ public class DataInitializer {
             Role adminRole = createRoleIfNotFound(roleRepository, "ROLE_ADMIN");
 
 
-            // Creates initial admin user if not present
+            // Φτιάχνουμε τον initial admin account
             if (!userRepository.existsByUsername("admin")) {
                 User admin = new User();
                 admin.setUsername("admin");
@@ -56,7 +56,7 @@ public class DataInitializer {
             User passengerGiorgos = createUserIfNotFound(userRepository, roleRepository, passwordEncoder,
                     "giorgos", "giorgos@test.com", "pass123", "+306933333333");
 
-            // Creates sample rides if none exist
+            // φτιάχνει sample rides εαν δεν υπάρχουν ηδη
             if (rideRepository.count() == 0) {
                 createRide(rideRepository, driverMaria,
                         "Athens, Syntagma",
@@ -90,7 +90,7 @@ public class DataInitializer {
     private User createUserIfNotFound(UserRepository userRepository, RoleRepository roleRepository,
                                       PasswordEncoder passwordEncoder, String username, String email,
                                       String rawPassword, String phone) {
-        // Creates user with roles if not found
+        //φτιαξε user με role εαν δεν υπάρχει ηδη
         return userRepository.findByUsername(username).orElseGet(() -> {
             User user = new User();
             user.setUsername(username);
