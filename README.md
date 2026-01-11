@@ -19,7 +19,7 @@ This project demonstrates a robust **Distributed System** architecture comprisin
 
 ---
 
-##Tech Stack
+## Tech Stack
 
 * **Language:** Java 21
 * **Framework:** Spring Boot 3.5.7
@@ -41,7 +41,7 @@ The easiest way to run the full system (App + SMS Service + Database) is using D
 ### Steps
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/gkoulis/DS-Lab-NOC.git](https://github.com/gkoulis/DS-Lab-NOC.git)
+    git clone https://github.com/YourTypicalTeo/dockerized_GreenRide.git
     cd distributed
     ```
 
