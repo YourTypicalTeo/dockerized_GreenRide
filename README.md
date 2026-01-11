@@ -9,7 +9,7 @@ This project demonstrates a robust **Distributed System** architecture comprisin
 1.  **GreenRide Service (Core)**
     * **Role:** The main application handling user management, ride booking, and the web interface.
     * **Tech:** Spring Boot Web (MVC), Spring Data JPA, Thymeleaf, Spring Security.
-    * **Database:** PostgreSQL (Production/Docker) or H2 (Dev).
+    * **Database:** PostgreSQL (Production/Docker).
     * **Security:** Hybrid architecture—Session-based for Web UI, JWT for REST API.
 
 2.  **HUA-NOC Service (External)**
@@ -25,7 +25,7 @@ This project demonstrates a robust **Distributed System** architecture comprisin
 * **Framework:** Spring Boot 3.5.7
 * **Build Tool:** Maven
 * **Containerization:** Docker & Docker Compose
-* **Database:** PostgreSQL 15 (Docker/Prod)
+* **Database:** PostgreSQL 15 (Docker/Prod) though render
 * **Frontend:** Thymeleaf + Bootstrap
 * **API Documentation:** SpringDoc OpenAPI (Swagger UI)
 
@@ -60,3 +60,5 @@ The easiest way to run the full system (App + SMS Service + Database) is using D
     ```bash
     docker-compose down
     ```
+    ## Server Join
+    You can also enter the server in which the application is hosted on http://209.38.176.44/
