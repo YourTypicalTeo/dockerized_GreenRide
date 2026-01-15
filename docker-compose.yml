@@ -16,12 +16,12 @@ services:
       - "8080:8080"
     depends_on:
       - hua-noc
-    environment:
+   environment:
       - NOC_SERVICE_URL=http://hua-noc:8081/api/v1
-      # EXTERNAL RENDER DATABASE CONFIGURATION
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://dpg-d5f38vbuibrs7393kep0-a.frankfurt-postgres.render.com:5432/greenride_db_06bi?sslmode=require
-      - SPRING_DATASOURCE_USERNAME=greenride_db_06bi_user
-      - SPRING_DATASOURCE_PASSWORD=onvudalomvV079cwh0NQ5Z7gJOksCQp4
+      # EXTERNAL RENDER DATABASE CONFIGURATION (UPDATED)
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://dpg-d5kfgn6r433s73eqe6b0-a.frankfurt-postgres.render.com:5432/greenride_db_f5yu?sslmode=require
+      - SPRING_DATASOURCE_USERNAME=greenride_db_f5yu_user
+      - SPRING_DATASOURCE_PASSWORD=L41zcguSqMFbB9o58I56HlIY0jsLxjw5
     networks:
       - greenride-net
 
