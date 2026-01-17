@@ -90,10 +90,9 @@ public class RouteeSmsService implements SmsService {
         }
 
         // Authenticate
-        // --------------------------------------------------
         final String token = this.getAccessToken();
 
-        // IMPROVEMENT: Handle the error! Don't crash if token is null.
+        // IMPROVEMENT: Handle the error Don't crash if token is null
         if (token == null) {
             LOGGER.error("Cannot send SMS: Authentication token unavailable.");
             return new SendSmsResult(false);
