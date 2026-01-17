@@ -20,7 +20,7 @@ public record RegisterRequest(
                 message = "Password must contain a digit, lowercase, uppercase, and a special character")
         String password,
 
-        @Pattern(regexp = "^(\\+3069\\d{8})|(\\+(?!30)\\d{7,14})$",
-                message = "Invalid number. If Greek, must be mobile (+3069...). If International, use E.164 format.")
+        @Pattern(regexp = "^\\+3069\\d{8}$", 
+         message = "Phone number must be a valid Greek mobile (e.g., +3069XXXXXXXX)")
         String phoneNumber
 ) {}
