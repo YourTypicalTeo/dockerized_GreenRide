@@ -28,7 +28,6 @@ This project demonstrates a robust **Distributed System** architecture comprisin
 * **Database:** PostgreSQL 15 (Docker/Prod) though render
 * **Frontend:** Thymeleaf + Bootstrap
 * **API Documentation:** SpringDoc OpenAPI (Swagger UI)
-
 ---
 
 ## Quick Start (Docker Compose)
