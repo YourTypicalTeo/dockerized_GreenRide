@@ -26,12 +26,22 @@ public class BlacklistFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        String clientIp = request.getRemoteAddr();
+        // 1. Προσπάθησε να πάρεις την IP από τον Header που βάζει το Nginx
+        String clientIp = request.getHeader("X-Forwarded-For");
 
+        // 2. Αν ο header είναι κενός, πάρε την κανονική IP (για testing χωρίς Nginx)
+        if (clientIp == null || clientIp.isEmpty()) {
+            clientIp = request.getRemoteAddr();
+        } else {
+            // Ο header μπορεί να έχει πολλές IP (π.χ. "ClientIP, Proxy1, Proxy2").
+            // Εμάς μας ενδιαφέρει η πρώτη (η αληθινή IP του χρήστη).
+            clientIp = clientIp.split(",")[0].trim();
+        }
+        
         // Έλεγχος αν η IP είναι στη λίστα
         if (blacklistService.isBlocked(clientIp)) {
             response.setStatus(HttpStatus.FORBIDDEN.value());
-            response.getWriter().write("Access Denied: Your IP has been blocked.");
+            response.getWriter().write("Access Denied: Your IP (" + clientIp + ") has been blocked.");
             return; // Διακοπή του αιτήματος εδώ
         }
 
