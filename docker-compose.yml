@@ -5,6 +5,8 @@ services:
     restart: always
     ports:
       - "8081:8081"
+    environment:
+      - JAVA_TOOL_OPTIONS=-Xmx256m
     networks:
       - greenride-net
 
@@ -22,6 +24,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://dpg-d5kfgn6r433s73eqe6b0-a.frankfurt-postgres.render.com:5432/greenride_db_f5yu?sslmode=require
       - SPRING_DATASOURCE_USERNAME=greenride_db_f5yu_user
       - SPRING_DATASOURCE_PASSWORD=L41zcguSqMFbB9o58I56HlIY0jsLxjw5
+      - JAVA_TOOL_OPTIONS=-Xms256m -Xmx512m
     networks:
       - greenride-net
 
