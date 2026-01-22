@@ -37,7 +37,7 @@ public class BlacklistFilter extends OncePerRequestFilter {
             // Εμάς μας ενδιαφέρει η πρώτη (η αληθινή IP του χρήστη).
             clientIp = clientIp.split(",")[0].trim();
         }
-        
+
         // Έλεγχος αν η IP είναι στη λίστα
         if (blacklistService.isBlocked(clientIp)) {
             response.setStatus(HttpStatus.FORBIDDEN.value());
